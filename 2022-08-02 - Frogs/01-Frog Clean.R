@@ -5,7 +5,7 @@
 
 
 rm(list = ls())
-pacman::p_load(tidyverse, expss, lubridate, gganimate, ggmap) 
+pacman::p_load(tidyverse, expss, lubridate, gganimate, ggmap, gifski) 
 
 frog <- read.csv("00-frogs.csv")
 
@@ -40,10 +40,10 @@ frog <- frog %>%
                 frogID = "Frog ID") 
 
 
-
-
-myLocation <- c(-121.83, 43.76, -121.76, 43.815)
-myMap <- get_map(location=myLocation, crop=FALSE, color="bw")
+myLocation <- c(left = -121.83, bottom =  43.76, 
+                right =  -121.76, top = 43.815)
+myMap <- get_stamenmap(bbox=myLocation, crop=TRUE, 
+                       color="color", maptype = "watercolor")
 
 frogPlot <- ggmap(myMap) +
   geom_point(aes(x=longitude, y=latitude, color=frogID, shape=Female), 
